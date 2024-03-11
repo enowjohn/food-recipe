@@ -1,5 +1,5 @@
-const mealContainer = document.getElementById('mealContainer');
-const searchInput = document.getElementById('searchInput');
+const mealContainer = document.getElementById('mealcontainer');
+const searchInput = document.getElementById('searchinput');
 
 // Fetch meals from the API
 async function getMeals(searchTerm) {
