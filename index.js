@@ -2,7 +2,7 @@ const mealContainer = document.getElementById('mealcontainer')
 const searchInput = document.getElementById('searchinput')
 
 // Fetch meals from the API
-async function getMeals(searchTerm) {
+async function getMeals (searchTerm) {
   try {
     const response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchTerm}`)
     const data = await response.json()
@@ -13,7 +13,7 @@ async function getMeals(searchTerm) {
 }
 
 // Display meals on the page
-function displayMeals(meals) {
+function displayMeals (meals) {
   mealContainer.innerHTML = ''
 
   meals.forEach(meal => {
@@ -32,7 +32,7 @@ function displayMeals(meals) {
 }
 
 // Search meals based on user input
-async function searchMeals() {
+async function searchMeals () {
   const searchTerm = searchInput.value
   const meals = await getMeals(searchTerm)
   displayMeals(meals)
