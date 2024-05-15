@@ -9,6 +9,10 @@ body {
     color: #fff;
     padding: 20px;
     text-align: center;
+    background-image: url(./images/g373701551450225.jpg);
+    background-size: cover;
+    /* background-size: auto; */
+    background-repeat: no-repeat;
   }
   
   .container {
@@ -45,7 +49,7 @@ body {
   
   button {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #ec6905;
     color: #fff;
     border: none;
     cursor: pointer;
@@ -54,4 +58,18 @@ body {
   .header {
     font-style: oblique;
   }
-  
+
+  .add-btn {
+    background-color: hsl(0, 10%, 74%);
+  }
+
+  .close {
+    background-color: grey;
+  }
+
+  .modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }

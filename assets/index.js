@@ -1,7 +1,5 @@
 const mealContainer = document.getElementById('mealcontainer')
 const searchInput = document.getElementById('searchinput')
-const mealName = document.getElementById('mealName')
-const ingredientList = document.getElementById('ingredient')
 const overlay = document.getElementById('overlay')
 
 // Fetch meals from the API
@@ -24,45 +22,78 @@ function displayMeals(meals) {
     mealDiv.classList.add('meal')
 
     mealDiv.innerHTML = `
-            <h3>${meal.strMeal}</h3>
-            <img src="${meal.strMealThumb}" alt="${meal.strMeal}">
-            <p>${meal.strCategory}</p>
-            <p>${meal.strArea}</p>
-            <div class="ingredients">
-              <h4>Ingredients:</h4>
-              <ul></ul>
-            </div>
-        `
-
+      <h3>${meal.strMeal}</h3>
+      <img src="${meal.strMealThumb}" alt="${meal.strMeal}">
+      <div class="btns">
+        <button class="add-btn">Add to Favorites</button>
+      </div>
+    `
+    
     mealDiv.addEventListener('click', () => {
-      showIngredients(meal.strMeal, meal.strInstructions)
+      showIngredients(meal)
+    })
+
+    const addButton = mealDiv.querySelector('.add-btn')
+    addButton.addEventListener('click', (event) => {
+      event.stopPropagation(); // Prevent click event from triggering meal click
+      addButton.textContent = 'Added to Favorites'
+      addButton.style.backgroundColor = 'lightgrey'
+      alert(`"${meal.strMeal}" has been added to favorites.`)
     })
 
     mealContainer.appendChild(mealDiv)
   })
 }
 
-//shows the ingredients
-const showIngredients = (mealName, instructions) => {
-  const ingredientsDiv = document.createElement('div')
-  ingredientsDiv.innerHTML = `
-    <h4>Ingredients for ${mealName}:</h4>
-    <p>${instructions}</p>
+// Show ingredients modal with image and return button
+const showIngredients = (meal) => {
+  overlay.style.display = 'block'
+  overlay.innerHTML = `
+    <div class="modal">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2>${meal.strMeal}</h2>
+      <img src="${meal.strMealThumb}" alt="${meal.strMeal}">
+      <div class="ingredients">
+        <h4>Ingredients:</h4>
+        <ul>
+          ${getIngredientsList(meal)}
+        </ul>
+      </div>
+      <button onclick="closeModal()">Return</button>
+    </div>
   `
-
-  const mealDiv = event.target.closest('.meal')
-  mealDiv.appendChild(ingredientsDiv)
 }
 
+// Get ingredients list
+function getIngredientsList(meal) {
+  const ingredients = []
+  for (let i = 1; i <= 20; i++) {
+    const ingredient = meal[`strIngredient${i}`]
+    if (ingredient) {
+      const measure = meal[`strMeasure${i}`]
+      ingredients.push(`<li>${ingredient} - ${measure}</li>`)
+    }
+  }
+  return ingredients.join('')
+}
+
+// Close ingredients modal
+function closeModal() {
+  overlay.style.display = 'none'
+}
 
 // Search meals based on user input
 async function searchMeals() {
-  const searchTerm = searchInput.value
-  const meals = await getMeals(searchTerm)
+  const searchTerm = searchInput.value;
+  const meals = await getMeals(searchTerm);
   displayMeals(meals)
 }
 
 // Load all meals initially
-window.onload = () => {
-  searchMeals('')
+window.onload = async () => {
+  const meals = await getMeals('')
+  displayMeals(meals)
 }
+
+// Real-time search as user types
+searchInput.addEventListener('input', searchMeals)
