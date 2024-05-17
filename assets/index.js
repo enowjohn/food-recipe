@@ -1,6 +1,7 @@
 const mealContainer = document.getElementById('mealcontainer')
 const searchInput = document.getElementById('searchinput')
 const favoritesContainer = document.getElementById('favorites-container')
+const mymodal = document.getElementById('mymodal')
 
 let favorites = JSON.parse(localStorage.getItem('favorites')) || [] 
 
@@ -41,6 +42,7 @@ function displayMeals(meals) {
     const viewButton = mealDiv.querySelector('.view-btn')
     viewButton.addEventListener('click', () => {
       toggleDetails(mealDiv)
+      mymodal.style.display = "block"
     })
 
     const closeButton = mealDiv.querySelector('.close-details')
@@ -54,11 +56,22 @@ function displayMeals(meals) {
       addButton.textContent = 'Added to Favorites'
       addButton.style.backgroundColor = 'lightgrey'
       addToFavorites(meal)
+      const favoritesContainer = document.createElement('div');
+      favoritesContainer.textContent = meal.strMeal;
+      document.body.appendChild(favoritesContainer);
+      const mealImage = document.createElement('img');
+      mealImage.src = meal.strMealThumb;
+      mealDiv.parentNode.insertBefore(favoritesContainer, mealDiv.nextSibling)
+      // document.body.appendChild(favoritesContainer);
+      document.body.appendChild(mealImage);
+      
       alert(`"${meal.strMeal}" has been added to favorites.`)
+      
     })
 
     mealContainer.appendChild(mealDiv)
   })
+  
 }
 
 
