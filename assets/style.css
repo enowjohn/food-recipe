@@ -7,7 +7,7 @@ body {
 header {
   background-color: #333;
   opacity: 0.8;
-  color: hsl(26, 96%, 47%);;
+  color: black;
   font-size: 15px;
   text-align: center;
   background-image: url(./images/g373701551450225.jpg);
@@ -184,5 +184,15 @@ button {
   height: 100px;
   object-fit: cover;
   margin: 5px;
+}
+
+.button-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.view-btn {
+  background-color: rgb(121, 30, 30);
 }
 
